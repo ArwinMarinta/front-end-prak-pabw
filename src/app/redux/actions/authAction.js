@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import axios from "axios";
 import { setToken, setUser } from "../reducers/authReducer";
 import { API_URL } from "../../../config/config";
