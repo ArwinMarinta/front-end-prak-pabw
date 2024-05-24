@@ -6,8 +6,11 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import loading from "@/utils/spinner";
+import { useDispatch } from "react-redux";
+import { register } from "../redux/actions/authAction";
 
 const Register = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,11 +32,19 @@ const Register = () => {
     setPhone(truncateValueNomor);
   };
 
+  const handleRegsiter = (e) => {
+    e.preventDefault();
+    dispatch(register(name, email, password, confPassword));
+  };
+
   return (
     <>
       <div className="flex h-full bg-white justify-center py-14">
         <div className="w-[100%] lg:w-[60%] flex justify-start items-center mx-[23px] lg:px-[128px] relative">
-          <form className="w-full border-2 rounded-lg shadow-xl px-6 py-8 text-neutral-700">
+          <form
+            className="w-full border-2 rounded-lg shadow-xl px-6 py-8 text-neutral-700"
+            onSubmit={handleRegsiter}
+          >
             <h1 className="text-[28px] text-[#1E3A5F] font-Montserrat font-bold   mb-8">
               Daftar
             </h1>
@@ -70,6 +81,7 @@ const Register = () => {
                     type={showPassword ? "text" : "password"}
                     className="border w-full py-2 px-3 rounded-xl pr-[3.5rem]"
                     placeholder="Masukkan password"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <button
                     type="button"
@@ -95,6 +107,7 @@ const Register = () => {
                     type={showConfirmPassword ? "text" : "password"}
                     className="border w-full py-2 px-3 rounded-xl pr-[3.5rem]"
                     placeholder="Masukkan konfirmasi password"
+                    onChange={(e) => setConfPassword(e.target.value)}
                   />
                   <button
                     type="button"
