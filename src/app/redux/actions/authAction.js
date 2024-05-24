@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import axios from "axios";
 import { setToken, setUser } from "../reducers/authReducer";
 import { API_URL } from "../../../config/config";
@@ -42,6 +41,39 @@ export const profile = () => async (dispatch, getState) => {
     console.log(data.data);
 
     dispatch(setUser(data));
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log(error.response);
+    }
+  }
+};
+
+export const register =
+  (name, email, password, confPassword) => async (dispatch, getState) => {
+    try {
+      const response = await axios.post(`${API_URL}/api/v1/auth/register`, {
+        name: name,
+        email: email,
+        password: password,
+        confPassword: confPassword,
+      });
+
+      const { message } = response.data;
+
+      alert(message);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response);
+      }
+    }
+  };
+
+export const verify = (token) => async (dispatch, getState) => {
+  try {
+    const response = await axios.patch(`${API_URL}/api/v1/auth/verify/${token}`);
+
+    const { message } = response.data;
+    alert(message);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log(error.response);
